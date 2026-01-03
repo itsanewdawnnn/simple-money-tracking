@@ -307,7 +307,7 @@
             dom.f.reset();
             dom.d.value = utils.toYMD(new Date());
             getAll(document, ".tg").forEach(b => b.classList.remove("active"));
-            getAll(dom.nav, ".tab")[0].click(); // Switch tab back
+            getAll(dom.nav, ".tab")[0].click();
          }
 
          this.load();
@@ -439,12 +439,29 @@
                   confirmButtonText: "Simpan",
                   cancelButtonText: "Batal",
                   didOpen: () => {
-                     getEl("ex_d").value = utils.toYMD(new Date(rowData.tanggal)); // Convert format date
+                     // Set tanggal
+                     const tanggalValue = utils.toYMD(new Date(rowData.tanggal));
+                     getEl("ex_d").value = tanggalValue;
+                     
+                     // Set keterangan dan nominal
                      getEl("ex_k").value = rowData.keterangan;
                      getEl("ex_n").value = valNominal;
-                     getEl("ex_p").value = rowData.pihak;
+                     
+                     // Set sumber
                      getEl("ex_s").value = rowData.sumber;
+                     
+                     // Set jenis
                      getEl("ex_j").value = valJenis;
+                     
+                     // Set pihak dengan exact match
+                     const pihakSelect = getEl("ex_p");
+                     const normalizedPihak = String(rowData.pihak).trim();
+                     for (let i = 0; i < pihakSelect.options.length; i++) {
+                        if (pihakSelect.options[i].value.trim() === normalizedPihak) {
+                           pihakSelect.selectedIndex = i;
+                           break;
+                        }
+                     }
                   },
                   preConfirm: () => ({
                      t: getEl("ex_d").value,
@@ -467,7 +484,7 @@
                      pihak: formVal.p,
                      sumber: formVal.s,
                      jenis: formVal.j,
-                     includeTime: formVal.t === utils.toYMD(new Date(rowData.tanggal)) // preserve logic
+                     includeTime: formVal.t === utils.toYMD(new Date(rowData.tanggal))
                   }, true);
                }
             }
