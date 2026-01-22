@@ -68,7 +68,7 @@ A performance‑oriented interface built without heavy frameworks, prioritizing 
 
 ### Frontend Setup
 
-1. Place `index.html`, `style.css`, and `script.js` in the same directory
+1. Place `index.html`, `style.css`, and `script.js` in the appropriate directory
 2. Update the `API_URL` constant in `script.js` with your backend Web App URL
 3. Host the frontend on a static hosting service such as **GitHub Pages**, **Vercel**, or **Netlify**
 
