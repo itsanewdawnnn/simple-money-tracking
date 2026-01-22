@@ -1,8 +1,8 @@
-# 💎 Cashly — Simple Money Tracking
+# 💸 Cashly — Simple Money Tracking
 
-**Cashly** is a refined, full‑stack personal finance management system engineered for reliability, clarity, and visual elegance. It combines a **modern Glassmorphism interface** with a **serverless Google Apps Script backend**, using Google Sheets as a secure, cloud‑native data store.
+**Cashly** is a lightweight, modern, and secure personal finance management system designed for clarity, reliability, and everyday usability. Built with pure **HTML, CSS, and JavaScript**, Cashly leverages a **serverless Google Apps Script backend** and **Google Sheets** as a cloud-native, secure data store.
 
-Designed for users who value precision and aesthetics, FinEase delivers a minimalist experience without compromising robustness.
+Featuring a refined **glassmorphism-inspired interface** with a clean, soft, and iOS-like aesthetic, Cashly prioritizes simplicity, performance, and visual elegance. Its minimal architecture ensures fast loading, easy maintenance, and seamless financial tracking without unnecessary complexity.
 
 ---
 
