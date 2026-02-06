@@ -1,56 +1,108 @@
 # 💸 Cashly — Simple Money Tracking
 
-**Cashly** is a lightweight, modern, and secure personal finance management system designed for clarity, reliability, and everyday usability. Built with pure **HTML, CSS, and JavaScript**, Cashly leverages a **serverless Google Apps Script backend** and **Google Sheets** as a cloud-native, secure data store.
+**Cashly** is a lightweight, modern, and secure personal finance tracking system designed for clarity, performance, and long-term reliability. Built using **pure HTML, CSS, and Vanilla JavaScript**, Cashly uses a **serverless Google Apps Script JSON API** with **Google Sheets** as its cloud-native datastore.
 
-Featuring a refined **glassmorphism-inspired interface** with a clean, soft, and iOS-like aesthetic, Cashly prioritizes simplicity, performance, and visual elegance. Its minimal architecture ensures fast loading, easy maintenance, and seamless financial tracking without unnecessary complexity.
+The application adopts a refined **glassmorphism-inspired UI**, emphasizing readability, soft contrast, and a distraction-free experience. Its minimal architecture ensures fast loading, predictable behavior, and easy maintenance without relying on heavy frameworks.
 
 ---
 
 ## 🏛 System Architecture
 
-FinEase is built on a clean, two‑layer architecture that separates presentation from logic, ensuring scalability and maintainability.
+Cashly is built on a clean **two-layer architecture** that clearly separates presentation logic from data processing.
 
-### 1. Core Backend — Google Apps Script
+### 1. Backend — Google Apps Script (JSON API)
 
-Acts as a lightweight JSON API that connects the frontend with Google Sheets.
+Acts as a stateless API layer between the frontend and Google Sheets.
 
-**Key Capabilities**
+**Core Responsibilities**
 
-* **Atomic Transactions** — Ensures consistency and integrity across all CRUD operations
-* **Automated Balance Calculation** — Real‑time balance updates using `MAP` and `LAMBDA`‑based logic
-* **Dynamic Validation** — Strict validation for transaction types, fund sources, and secure PIN authentication
-* **Serverless Deployment** — No infrastructure maintenance, fully managed by Google
+- **CRUD Transaction Handling**  
+  Add, edit, and delete financial records with strict validation.
 
----
+- **Hashed PIN Authentication**  
+  PIN is **hashed client-side (SHA-256)** and stored as a hash only — the raw PIN is never saved or transmitted.
 
-### 2. Frontend Interface — HTML5, CSS3, Vanilla JavaScript
+- **Automated Balance Calculation**  
+  Running balances are calculated using **ARRAYFORMULA, MAP, and LAMBDA**, ensuring consistency and eliminating manual recalculation.
 
-A performance‑oriented interface built without heavy frameworks, prioritizing speed and clarity.
+- **Dynamic Configuration**  
+  Application title, subtitle, profile photo, parties, and categories are configurable via the `.Settings` sheet.
 
-**Interface Highlights**
-
-* **Glassmorphism Design System** — Subtle transparency and backdrop blur for a premium, modern appearance
-* **Vanilla JavaScript Engine** — Lightweight, predictable, and fast execution
-* **SweetAlert2 Feedback Layer** — Polished, interactive notifications replacing standard browser alerts
+- **Serverless Deployment**  
+  No infrastructure management — fully managed by Google Apps Script.
 
 ---
 
 ## 🎨 Design Philosophy
 
-* **Clarity Above All** — Financial data is presented with optimal contrast and spacing
-* **Minimalist by Design** — Only essential elements are displayed to maintain focus
-* **Soft Interactions** — Smooth hover states and transitions for a professional, composed feel
+- **Clarity First** — Financial data must be readable at a glance
+- **Minimal by Default** — No unnecessary UI elements
+- **Soft Interactions** — Calm animations and transitions
+- **Predictable Behavior** — No hidden automation or background mutations
+
+---
+
+### 2. Frontend — HTML5, CSS3, Vanilla JavaScript
+
+A performance-oriented interface built without frameworks, optimized for speed and predictability.
+
+**Interface Highlights**
+
+- **Glassmorphism Design System**  
+  Subtle transparency, blur, and soft shadows for a modern, premium feel.
+
+- **PIN-Based Lock Screen**  
+  Application remains locked until PIN verification succeeds.
+
+- **Background Data Preloading**  
+  Transaction data and metadata are fetched **while the lock screen is active**, allowing instant access after unlock.
+
+- **SweetAlert2 Notification Layer**  
+  Clean, consistent user feedback replacing native browser alerts.
+
+---
+
+## 🔐 Security Model
+
+- PIN is **never stored or transmitted in plain text**
+- Only a **SHA-256 hash** is saved in the `.Settings` sheet
+- PIN verification is performed entirely on the client using the stored hash
+- Backend remains stateless and does not handle authentication logic
 
 ---
 
 ## 🧩 Functional Overview
 
-| Layer         | Responsibility                   | Technology                              |
-| ------------- | -------------------------------- | --------------------------------------- |
-| Logic         | Data processing & API routing    | Google Apps Script                      |
-| Interface     | Visualization & user interaction | HTML5, CSS3 (Glassmorphism), Vanilla JS |
-| Storage       | Persistent cloud database        | Google Sheets                           |
-| Notifications | User feedback & alerts           | SweetAlert2                             |
+| Layer          | Responsibility                         | Technology                     |
+|---------------|----------------------------------------|--------------------------------|
+| Logic          | API routing & data processing           | Google Apps Script             |
+| Interface      | UI rendering & user interaction         | HTML5, CSS3, Vanilla JS        |
+| Storage        | Persistent cloud datastore              | Google Sheets                  |
+| Authentication | Client-side PIN hash verification       | SHA-256 (Web Crypto API)       |
+| Notifications  | User feedback & confirmations           | SweetAlert2                    |
+
+---
+
+## ⚙️ API Endpoints
+
+### GET Requests
+
+| Action        | Description                                   |
+|---------------|-----------------------------------------------|
+| `getOptions`  | Fetch app metadata and PIN hash               |
+| `getSheets`   | Retrieve available transaction sheets         |
+| `getData`     | Fetch transactions and current balances       |
+
+---
+
+### POST Requests
+
+| Action        | Description                                   |
+|---------------|-----------------------------------------------|
+| `add`         | Add new transaction                           |
+| `edit`        | Edit existing transaction                    |
+| `delete`      | Delete transaction                            |
+| `saveOptions` | Update app configuration                     |
 
 ---
 
@@ -58,23 +110,27 @@ A performance‑oriented interface built without heavy frameworks, prioritizing 
 
 ### Backend Setup
 
-1. Copy the provided `Code.gs` into the **Google Apps Script** editor linked to your Google Sheet
-2. Deploy the project as a **Web App**
-
-   * Access: **Anyone**
-3. Save the generated **Web App URL**
+1. Open your Google Sheet
+2. Open **Extensions → Apps Script**
+3. Paste the provided `Code.gs`
+4. Deploy as **Web App**
+   - Execute as: **Me**
+   - Access: **Anyone**
+5. Copy the generated Web App URL
 
 ---
 
 ### Frontend Setup
 
-1. Place `index.html`, `style.css`, and `script.js` in the appropriate directory
-2. Update the `API_URL` constant in `script.js` with your backend Web App URL
-3. Host the frontend on a static hosting service such as **GitHub Pages**, **Vercel**, or **Netlify**
+1. Place `index.html`, `style.css`, and `script.js` in your project directory
+2. Append your Apps Script **deployment ID** as a query parameter: `?config=YOUR_DEPLOYMENT_ID`
+3. Serve the frontend as a `static web application`
 
 ---
 
 ## 📄 License
 
-This project is released as open‑source software.
-Built with precision. Designed with restraint.
+This project is released as open-source software.
+
+Built with precision.  
+Designed with restraint.
