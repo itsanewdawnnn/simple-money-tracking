@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang=id>
+<head>
+<meta charset=UTF-8>
+<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name=theme-color content=#FFFFFF>
+<title>Cashly</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel=stylesheet>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css>
+<link rel=stylesheet href=assets/css/style.css>
+</head>
+<body>
+<div class=loading-overlay id=lod><div class=loader></div></div>
+<div class="pin-lock hidden" id=pin>
+<div class=pin-container>
+<div class=pin-header>
+<div class=pin-avatar-wrap><img id=pin-avatar class=pin-avatar alt=""></div>
+<div class=pin-title-wrap><h2 class=pin-title id=pin-title-text></h2><p class=pin-sub>Masukkan PIN untuk membuka</p></div>
+</div>
+<div class=pin-dots id=pind></div>
+<div class=pin-pad id=pink></div>
+</div>
+</div>
+<div class="app hidden" id=app-main>
+<div class=top>
+<div class=head>
+<div><h2 id=tit></h2><p id=sub></p></div>
+<div class=head-actions>
+<button id=dark class=btn-icon><svg width=20 height=20 viewBox="0 0 24 24" fill=none stroke=currentColor stroke-width=2><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+<img alt="" id=prof class=avatar-btn>
+</div>
+</div>
+<div class=ctrl>
+<select id=sht class=sel disabled><option>Memuat...</option></select>
+<button id=ref class=btn-i><svg width=20 height=20 viewBox="0 0 24 24" fill=none stroke=currentColor stroke-width=2><path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></button>
+</div>
+<div class=tabs id=tabs>
+<button class="tab active" data-v=rep>Laporan</button>
+<button class=tab data-v=add>Tambah Transaksi</button>
+</div>
+</div>
+<div class=main>
+<div id=rep class="view active">
+<div class=sum>
+<div class=card><span>Saldo ATM</span><b id=atm>-</b></div>
+<div class=card><span id=p1l>Pihak 1</span><b id=p1>-</b></div>
+<div class=card><span id=p2l>Pihak 2</span><b id=p2>-</b></div>
+</div>
+<div class=search-bar>
+<div class=search-wrap>
+<svg width=16 height=16 viewBox="0 0 24 24" fill=none stroke=currentColor stroke-width=2><circle cx=11 cy=11 r=8 /><path d="m21 21-4.35-4.35"/></svg>
+<input id=srch class=search-input placeholder=Cari...>
+<button id=clr class="clear-btn hidden"><svg width=16 height=16 viewBox="0 0 24 24" fill=none stroke=currentColor stroke-width=2><line x1=18 y1=6 x2=6 y2=18 /><line x1=6 y1=6 x2=18 y2=18 /></svg></button>
+</div>
+<div class=fc>
+<button class=fdb id=dfb><svg width=16 height=16 viewBox="0 0 24 24" fill=none stroke=currentColor stroke-width=2><rect x=3 y=4 width=18 height=18 rx=2 /><line x1=16 y1=2 x2=16 y2=6 /><line x1=8 y1=2 x2=8 y2=6 /><line x1=3 y1=10 x2=21 y2=10 /></svg></button>
+<div class="fdd fdd-r" id=dfd>
+<button class="fo active" data-r=all>Semua</button>
+<button class=fo data-r=today>Hari Ini</button>
+<button class=fo data-r=yesterday>Kemarin</button>
+<button class=fo data-r=week>7 Hari Terakhir</button>
+<div class=fsep></div>
+<button class=fo data-r=w1>Minggu 1 (1-7)</button>
+<button class=fo data-r=w2>Minggu 2 (8-14)</button>
+<button class=fo data-r=w3>Minggu 3 (15-21)</button>
+<button class=fo data-r=w4>Minggu 4 (22-31)</button>
+</div>
+</div>
+</div>
+<div class=lh>
+<div class=lh-left>
+<span>Riwayat Transaksi</span>
+<div class=fc><button class=fb id=fb title=Kategori><svg width=16 height=16 viewBox="0 0 24 24" fill=none stroke=currentColor stroke-width=2><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg></button><div class=fdd id=fd></div></div>
+<div class=fc><button class=fb id=fpb title=Pihak><svg width=16 height=16 viewBox="0 0 24 24" fill=none stroke=currentColor stroke-width=2><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx=12 cy=7 r=4 /></svg></button><div class=fdd id=fpd></div></div>
+<span class="ftotal ftin" id=ftin></span>
+<span class="ftotal ftout" id=ftout></span>
+</div>
+</div>
+<div id=lod2 class=loading2><div class=skel></div><div class=skel></div><div class=skel></div></div>
+<div id=emp class=empty>Belum ada data transaksi</div>
+<ul id=lst class=list></ul>
+</div>
+<div id=add class=view>
+<div class=frm><form id=frm>
+<div class=grp><label>Tanggal <span class=req>*</span></label><input type=date id=dt class=inp></div>
+<div class=grp><label>Keterangan <span class=req>*</span></label><input id=dsc class=inp placeholder="Cth: Beli Makanan" autocomplete=off></div>
+<div class=grp><label>Nominal <span class=req>*</span></label><input inputmode=numeric id=amt_in class=inp placeholder=0></div>
+<div class=grid-2>
+<div class=grp><label>Pihak <span class=req>*</span></label><div class=togs id=pb></div><input type=hidden name=pihak></div>
+<div class=grp><label>Sumber <span class=req>*</span></label><div class=togs><button type=button class=tg data-v=ATM>ATM</button><button type=button class=tg data-v=CASH>CASH</button></div><input type=hidden name=sumber></div>
+</div>
+<div class=grp><label>Jenis <span class=req>*</span></label><div class="togs togs-s"><button type=button class=tg data-v=Debit>Debit (Masuk)</button><button type=button class=tg data-v=Kredit>Kredit (Keluar)</button></div><input type=hidden name=jenis></div>
+<div class=grp><label>Kategori</label><div class="togs togs-g" id=kb></div><input type=hidden name=kategori></div>
+<button type=submit class=btn-s id=sbm>Simpan Transaksi</button>
+</form></div>
+</div>
+</div>
+</div>
+<template id=tpl-li>
+<li class=li><div class=l-l><div class=dt><span class=day></span><span class=dtxt></span><span class=tm></span></div><div class=desc></div><div class=tags><span class=tkat></span><span class=tp></span><span class=ts></span></div></div><div class=l-r><div class=amt></div><div class=act><button class="bm be" data-a=e><svg width=14 height=14 viewBox="0 0 24 24" fill=none stroke=currentColor stroke-width=2><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="bm bd" data-a=d><svg width=14 height=14 viewBox="0 0 24 24" fill=none stroke=currentColor stroke-width=2><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button></div></div></li>
+</template>
+<template id=tpl-del>
+<div><div class=del-card><div class=md-row><span class=md-l>Tanggal</span><span class="md-v v-date"></span></div><div class=md-row><span class=md-l>Keterangan</span><span class="md-v v-desc"></span></div><div class=md-row><span class=md-l>Nominal</span><span class="md-v v-amt"></span></div></div><p class=del-warn>Data yang dihapus tidak dapat dikembalikan</p></div>
+</template>
+<template id=tpl-edit>
+<div class=edit-wrap>
+<div class=grp><label>Tanggal <span class=req>*</span></label><input id=x_d type=date class=inp></div>
+<div class=grp><label>Keterangan <span class=req>*</span></label><input id=x_k class=inp></div>
+<div class=grp><label>Nominal <span class=req>*</span></label><input id=x_n inputmode=numeric class=inp></div>
+<div class=grid-2><div class=grp><label>Pihak <span class=req>*</span></label><div class=togs id=ep></div><input type=hidden id=xp></div><div class=grp><label>Sumber <span class=req>*</span></label><div class=togs id=es><button type=button class=tg data-v=ATM>ATM</button><button type=button class=tg data-v=CASH>CASH</button></div><input type=hidden id=xs></div></div>
+<div class=grp><label>Jenis <span class=req>*</span></label><div class="togs togs-s" id=ej><button type=button class=tg data-v=Debit>Debit (Masuk)</button><button type=button class=tg data-v=Kredit>Kredit (Keluar)</button></div><input type=hidden id=xj></div>
+<div class=grp><label>Kategori</label><div class="togs togs-g" id=ek></div><input type=hidden id=xk></div>
+</div>
+</template>
+<script src=https://cdn.jsdelivr.net/npm/sweetalert2@11></script>
+<script src=assets/js/script.js></script>
+</body>
+</html>
